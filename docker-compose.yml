@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postres_db:
+    image: postgres
+    container_name: PostgresCont
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_USER_PASSWORD=posgres123
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_db:/var/lib/posgresql/data
+volumes:
+  postgres_db:
+    driver: local
