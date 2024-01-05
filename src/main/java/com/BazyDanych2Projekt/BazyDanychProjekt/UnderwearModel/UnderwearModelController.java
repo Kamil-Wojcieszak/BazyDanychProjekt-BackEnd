@@ -1,7 +1,5 @@
 package com.BazyDanych2Projekt.BazyDanychProjekt.UnderwearModel;
 
-import com.BazyDanych2Projekt.BazyDanychProjekt.Underwear.Underwear;
-import com.BazyDanych2Projekt.BazyDanychProjekt.Underwear.UnderwearRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +20,36 @@ public class UnderwearModelController {
     @GetMapping("/{id}")
     public UnderwearModel getUnderwearModelById(@PathVariable("id") int id) {
         return underwearModelRepository.getUnderwearModelById(id);
+    }
+
+    @PostMapping("/add")
+    public String addReport(@RequestBody List<UnderwearModel> underwearModels) {
+        return underwearModelRepository.saveUnderwearModels(underwearModels);
+    }
+
+    @PatchMapping("/{id}")
+    public String updateUnderwearModel(@PathVariable("id") int id, @RequestBody UnderwearModel updatedUnderwearModel) {
+        UnderwearModel underwearModel = underwearModelRepository.getUnderwearModelById(id);
+
+        if (underwearModel != null) {
+            if (updatedUnderwearModel.getCategory() != null) {
+                underwearModel.setCategory(updatedUnderwearModel.getCategory());
+            }
+
+            if (updatedUnderwearModel.getName() != null) {
+                underwearModel.setName(updatedUnderwearModel.getName());
+            }
+
+            if (updatedUnderwearModel.getMark() != null) {
+                underwearModel.setMark(updatedUnderwearModel.getMark());
+            }
+
+            underwearModelRepository.updateUnderwearMoedl(underwearModel);
+
+            return "Success!";
+        } else {
+            return "Error";
+        }
     }
 
     @DeleteMapping("/{id}")

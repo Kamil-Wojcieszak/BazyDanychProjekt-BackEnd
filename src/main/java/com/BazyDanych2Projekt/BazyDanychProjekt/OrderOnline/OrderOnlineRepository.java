@@ -33,4 +33,10 @@ public class OrderOnlineRepository {
 
         return "Success!";
     }
+
+    public String deleteOrderOnline(int id) {
+        jdbcTemplate.update("DELETE FROM order_online WHERE order_on_id = ?", id);
+
+        return "Success!";
+    }
 }

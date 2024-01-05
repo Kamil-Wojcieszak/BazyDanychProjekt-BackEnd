@@ -1,5 +1,6 @@
 package com.BazyDanych2Projekt.BazyDanychProjekt.Wholesaler;
 
+import com.BazyDanych2Projekt.BazyDanychProjekt.Report.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,6 +30,11 @@ public class WholesalerRepository {
                 wholesaler.getAddress_id()));
 
         return "Success!";
+    }
+
+    public int updateWholesaler(Wholesaler wholesaler) {
+        return jdbcTemplate.update("UPDATE wholesaler SET name = ?, address_id = ? WHERE wholesaler_id = ?",
+                wholesaler.getName(), wholesaler.getAddress_id(), wholesaler.getWholesaler_id());
     }
 
     public String deleteWholesaler(int id) {

@@ -36,17 +36,9 @@ public class UnderwearRepository {
         return "Success!";
     }
 
-    public String fullyUpdateUnderwear(Underwear underwear) {
-        jdbcTemplate.update("UPDATE underwear SET underwear_id = ?, underwear_model_id = ?, size = ?, color = ?, sku = ?, ean = ?, quantity = ?, price = ?",
-                underwear.getUnderwear_id(), underwear.getUnderwear_model_id(), underwear.getSize(), underwear.getColor(),
-                underwear.getSku(), underwear.getEan(), underwear.getQuantity(), underwear.getPrice());
-
-        return "Success!";
-    }
-
-    public String partiallyUpdateUnderwear(Underwear underwear) {
-        jdbcTemplate.update("UPDATE underwear SET size = ?, color = ?, sku = ?, ean = ?, quantity = ?, price = ?",
-                underwear.getSize(), underwear.getColor(), underwear.getSku(), underwear.getEan(), underwear.getQuantity(), underwear.getPrice());
+    public String updateUnderwear(Underwear underwear) {
+        jdbcTemplate.update("UPDATE underwear SET underwear_model_id = ?, size = ?, color = ?, sku = ?, ean = ?, quantity = ?, price = ? WHERE underwear_id = ?",
+                underwear.getUnderwear_model_id(), underwear.getSize(), underwear.getColor(), underwear.getSku(), underwear.getEan(), underwear.getQuantity(), underwear.getPrice(), underwear.getUnderwear_id());
 
         return "Success!";
     }

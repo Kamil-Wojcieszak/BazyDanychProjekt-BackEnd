@@ -1,5 +1,6 @@
 package com.BazyDanych2Projekt.BazyDanychProjekt.Store;
 
+import com.BazyDanych2Projekt.BazyDanychProjekt.Seller.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +18,31 @@ public class StoreController {
         return storeRepository.getStoreList();
     }
 
+    @GetMapping("/{id}")
+    public Store getStoreById(@PathVariable("id") int id) {
+        return storeRepository.getStoreById(id);
+    }
+
     @PostMapping("/add")
-    public String addStore(List<Store> store) {
-        return storeRepository.addStore(store);
+    public String addStore(@RequestBody List<Store> stores) {
+        return storeRepository.addStore(stores);
+    }
+
+    @PatchMapping("/{id}")
+    public String updateStore(@PathVariable("id") int id, @RequestBody Store updatedStore) {
+        Store store = storeRepository.getStoreById(id);
+
+        if (store != null) {
+            if (updatedStore.getAddress_id() > 0) {
+                store.setAddress_id(updatedStore.getAddress_id());
+            }
+
+            storeRepository.updateStore(store);
+
+            return "Success!";
+        } else {
+            return "Error";
+        }
     }
 
     @DeleteMapping("/{id}-store")

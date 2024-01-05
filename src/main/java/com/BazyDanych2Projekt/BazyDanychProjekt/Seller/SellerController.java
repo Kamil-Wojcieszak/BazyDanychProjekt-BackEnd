@@ -22,6 +22,28 @@ public class SellerController {
         return sellerRepository.addSeller(seller);
     }
 
+    @GetMapping("/{id}")
+    public Seller getSellerById(@PathVariable("id") int id) {
+        return sellerRepository.getSellerById(id);
+    }
+
+    @PatchMapping("/{id}")
+    public String updateSeller(@PathVariable("id") int id, @RequestBody Seller updatedSeller) {
+        Seller seller = sellerRepository.getSellerById(id);
+
+        if (seller != null) {
+            if (updatedSeller.getStore_id() > 0) {
+                seller.setStore_id(updatedSeller.getStore_id());
+            }
+
+            sellerRepository.updateSeller(seller);
+
+            return "Success!";
+        } else {
+            return "Error";
+        }
+    }
+
     @DeleteMapping("/{id}-seller")
     public String deleteSellerBySellerId(@PathVariable("id") int id) {
         return sellerRepository.deleteSellerBySellerId(id);

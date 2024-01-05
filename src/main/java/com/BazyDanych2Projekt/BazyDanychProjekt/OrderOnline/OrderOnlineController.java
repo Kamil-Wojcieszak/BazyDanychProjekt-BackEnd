@@ -31,4 +31,9 @@ public class OrderOnlineController {
     public String add(@RequestBody List<OrderOnline> orderOnline) {
         return orderOnlineRepository.saveOrders(orderOnline);
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteOrderOnline(@PathVariable("id") int id) {
+        return orderOnlineRepository.deleteOrderOnline(id);
+    }
 }

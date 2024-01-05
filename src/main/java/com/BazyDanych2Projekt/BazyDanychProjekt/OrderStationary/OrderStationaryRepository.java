@@ -1,5 +1,6 @@
 package com.BazyDanych2Projekt.BazyDanychProjekt.OrderStationary;
 
+import com.BazyDanych2Projekt.BazyDanychProjekt.Address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,6 +28,17 @@ public class OrderStationaryRepository {
                 orderStationaryValues.getOrder_st_id(),
                 orderStationaryValues.getTotality(),
                 orderStationaryValues.getDate()));
+
+        return "Success!";
+    }
+
+    public int updateOrderStationary(OrderStationary orderStationary) {
+        return jdbcTemplate.update("UPDATE order_stationary SET totality = ?, date = ? WHERE order_st_id = ?",
+                orderStationary.getTotality(), orderStationary.getDate(), orderStationary.getOrder_st_id());
+    }
+
+    public String deleteOrderStationary(int id) {
+        jdbcTemplate.update("DELETE FROM order_stationary WHERE order_st_id = ?", id);
 
         return "Success!";
     }

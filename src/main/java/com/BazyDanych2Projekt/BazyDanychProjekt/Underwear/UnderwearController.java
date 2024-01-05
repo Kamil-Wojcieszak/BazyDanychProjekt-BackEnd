@@ -46,7 +46,7 @@ public class UnderwearController {
             underwear.setQuantity(updatedUnderwear.getQuantity());
             underwear.setPrice(updatedUnderwear.getPrice());
 
-            underwearRepository.fullyUpdateUnderwear(underwear);
+            underwearRepository.updateUnderwear(underwear);
 
             return "SUCCESS";
         } else {
@@ -55,17 +55,13 @@ public class UnderwearController {
     }
 
     @PatchMapping("/{id}")
-    public String partiallyUpdateUnderwear(@PathVariable("id") int id, @RequestBody Underwear updatedUnderwear) {
+    public String updateUnderwear(@PathVariable("id") int id, @RequestBody Underwear updatedUnderwear) {
         Underwear underwear = underwearRepository.getUnderwearById(id);
 
         if (underwear != null) {
-//            if (updatedUnderwear.getUnderwear_id() > 0) {
-//                underwear.setUnderwear_id(updatedUnderwear.getUnderwear_id());
-//            }
-//
-//            if (updatedUnderwear.getUnderwear_model_id() > 0) {
-//                underwear.setUnderwear_model_id(updatedUnderwear.getUnderwear_model_id());
-//            }
+            if (updatedUnderwear.getUnderwear_model_id() > 0) {
+                underwear.setUnderwear_model_id(updatedUnderwear.getUnderwear_model_id());
+            }
 
             if (updatedUnderwear.getSize() != null) {
                 underwear.setSize(updatedUnderwear.getSize());
@@ -75,11 +71,11 @@ public class UnderwearController {
                 underwear.setColor(updatedUnderwear.getColor());
             }
 
-            if (!updatedUnderwear.getSku().equals(underwear.getSku()) && updatedUnderwear.getSku() != null) {
+            if (updatedUnderwear.getSku() != null) {
                 underwear.setSku(updatedUnderwear.getSku());
             }
 
-            if (!updatedUnderwear.getEan().equals(underwear.getEan()) && updatedUnderwear.getEan() != null) {
+            if (updatedUnderwear.getEan() != null) {
                 underwear.setEan(updatedUnderwear.getEan());
             }
 
@@ -91,7 +87,7 @@ public class UnderwearController {
                 underwear.setPrice(updatedUnderwear.getPrice());
             }
 
-            underwearRepository.partiallyUpdateUnderwear(underwear);
+            underwearRepository.updateUnderwear(underwear);
 
             return "SUCCESS";
         } else {
