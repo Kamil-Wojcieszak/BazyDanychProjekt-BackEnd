@@ -17,8 +17,8 @@ public class UnderwearRepository {
         return jdbcTemplate.query("SELECT * FROM underwear", BeanPropertyRowMapper.newInstance(Underwear.class));
     }
 
-    public Underwear getUnderwearById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM underwear WHERE underwear_id = ?", BeanPropertyRowMapper.newInstance(Underwear.class), id);
+    public List<Underwear> getUnderwearById(int id) {
+        return jdbcTemplate.query("SELECT * FROM underwear WHERE underwear_id = ?", BeanPropertyRowMapper.newInstance(Underwear.class), id);
     }
 
     public String saveUnderwear(List<Underwear> underwear) {
@@ -44,6 +44,8 @@ public class UnderwearRepository {
     }
 
     public String deleteUnderwear(int id) {
+        jdbcTemplate.update("DELETE FROM relation_store_underwear WHERE underwear_id = ?", id);
+
         jdbcTemplate.update("DELETE FROM underwear WHERE underwear_id = ?", id);
 
         return "Success!";

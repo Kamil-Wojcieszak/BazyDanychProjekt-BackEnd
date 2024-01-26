@@ -15,4 +15,5 @@ public class OrderOnline {
     private String email;
     private Date date;
     private int phone_number;
+    private String status;
 }

@@ -13,7 +13,7 @@ public class OrderOnlineController {
     @Autowired
     OrderOnlineRepository orderOnlineRepository;
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public List<OrderOnline> getOrderOnlineList() {
         return orderOnlineRepository.getOrderOnlineList();
     }
@@ -22,18 +22,19 @@ public class OrderOnlineController {
     public List<OrderOnline> getOrderOnlineFiltered(
             @RequestParam("id") int id,
             @RequestParam("email") String email,
-            @RequestParam("phoneNumber") int phoneNumber
+            @RequestParam("phoneNumber") int phoneNumber,
+            @RequestParam("status") String status
     ) {
-        return orderOnlineRepository.getOrderOnlineFiltered(id, email, phoneNumber);
+        return orderOnlineRepository.getOrderOnlineFiltered(id, email, phoneNumber, status);
     }
 
     @PostMapping("/add")
-    public String add(@RequestBody List<OrderOnline> orderOnline) {
-        return orderOnlineRepository.saveOrders(orderOnline);
+    public void add(@RequestBody List<OrderOnline> orderOnline) {
+        orderOnlineRepository.saveOrders(orderOnline);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteOrderOnline(@PathVariable("id") int id) {
-        return orderOnlineRepository.deleteOrderOnline(id);
+    public void deleteOrderOnline(@PathVariable("id") int id) {
+        orderOnlineRepository.deleteOrderOnline(id);
     }
 }

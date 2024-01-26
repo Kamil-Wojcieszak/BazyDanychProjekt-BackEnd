@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/underwear")
@@ -14,27 +15,28 @@ public class UnderwearController {
 
     @GetMapping("/test")
     public String test() {
-        return "It works";
+        return "{test:\"It works\"}";
     }
 
-    @GetMapping("/list")
-    public List<Underwear> getUnderwearList() {
+    @GetMapping("/")
+    public List<Underwear> getUnderwear() {
         return underwearRepository.getUnderwearList();
     }
 
     @GetMapping("/{id}")
-    public Underwear getById(@PathVariable("id") int id) {
+    public List<Underwear> getById(@PathVariable("id") int id) {
         return underwearRepository.getUnderwearById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public String add(@RequestBody List<Underwear> underwear) {
+        System.out.println(underwear);
         return underwearRepository.saveUnderwear(underwear);
     }
 
     @PutMapping("/{id}")
     public String fullyUpdateUnderwear(@PathVariable("id") int id, @RequestBody Underwear updatedUnderwear) {
-        Underwear underwear = underwearRepository.getUnderwearById(id);
+        Underwear underwear = underwearRepository.getUnderwearById(id).get(0);
 
         if (underwear != null) {
             underwear.setUnderwear_id(updatedUnderwear.getUnderwear_id());
@@ -56,7 +58,7 @@ public class UnderwearController {
 
     @PatchMapping("/{id}")
     public String updateUnderwear(@PathVariable("id") int id, @RequestBody Underwear updatedUnderwear) {
-        Underwear underwear = underwearRepository.getUnderwearById(id);
+        Underwear underwear = underwearRepository.getUnderwearById(id).get(0);
 
         if (underwear != null) {
             if (updatedUnderwear.getUnderwear_model_id() > 0) {

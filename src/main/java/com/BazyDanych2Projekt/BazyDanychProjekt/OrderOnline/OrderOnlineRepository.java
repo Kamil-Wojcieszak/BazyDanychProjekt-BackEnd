@@ -18,12 +18,12 @@ public class OrderOnlineRepository {
         return jdbcTemplate.query("SELECT * FROM order_online", BeanPropertyRowMapper.newInstance(OrderOnline.class));
     }
 
-    public List<OrderOnline> getOrderOnlineFiltered(int id, String email, int phoneNumber) {
-        return jdbcTemplate.query("SELECT * FROM order_online WHERE order_on_id = ? OR email = ? OR phone_number = ?", BeanPropertyRowMapper.newInstance(OrderOnline.class), id, email, phoneNumber);
+    public List<OrderOnline> getOrderOnlineFiltered(int id, String email, int phoneNumber,String status) {
+        return jdbcTemplate.query("SELECT * FROM order_online WHERE order_on_id = ? OR email = ? OR phone_number = ? OR status = ?", BeanPropertyRowMapper.newInstance(OrderOnline.class), id, email, phoneNumber, status);
     }
 
-    public String saveOrders(List<OrderOnline> orderOnline) {
-        orderOnline.forEach(orderOnlineValue -> jdbcTemplate.update("INSERT INTO order_online (order_on_id, totality, email, date, phone_number)" +
+    public void saveOrders(List<OrderOnline> orderOnline) {
+        orderOnline.forEach(orderOnlineValue -> jdbcTemplate.update("INSERT INTO order_online (order_on_id, totality, email, date, phone_number,NEW)" +
                         "VALUES (?, ?, ?, ?, ?)",
                 orderOnlineValue.getOrder_on_id(),
                 orderOnlineValue.getTotality(),
@@ -31,12 +31,9 @@ public class OrderOnlineRepository {
                 orderOnlineValue.getDate(),
                 orderOnlineValue.getPhone_number()));
 
-        return "Success!";
     }
 
-    public String deleteOrderOnline(int id) {
+    public void deleteOrderOnline(int id) {
         jdbcTemplate.update("DELETE FROM order_online WHERE order_on_id = ?", id);
-
-        return "Success!";
     }
 }

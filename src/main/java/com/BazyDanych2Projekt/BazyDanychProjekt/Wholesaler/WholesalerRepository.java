@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class WholesalerRepository {
+public class  WholesalerRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;

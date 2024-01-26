@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Wholesaler {
+public class  Wholesaler {
     private int wholesaler_id;
     private String name;
     private int address_id;
