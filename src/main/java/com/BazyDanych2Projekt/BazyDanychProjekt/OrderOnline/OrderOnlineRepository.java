@@ -23,18 +23,19 @@ public class OrderOnlineRepository {
         return jdbcTemplate.queryForObject("SELECT * FROM order_online WHERE order_on_id = ?", BeanPropertyRowMapper.newInstance(OrderOnline.class), id);
     }
 
-    public List<OrderOnline> getOrderOnlineFiltered(int id, String email, int phoneNumber,String status) {
+    public List<OrderOnline> getOrderOnlineFiltered(int id, String email, int phoneNumber, String status) {
         return jdbcTemplate.query("SELECT * FROM order_online WHERE order_on_id = ? OR email = ? OR phone_number = ? OR status = ?", BeanPropertyRowMapper.newInstance(OrderOnline.class), id, email, phoneNumber, status);
     }
 
     public void saveOrders(List<OrderOnline> orderOnline) {
-        orderOnline.forEach(orderOnlineValue -> jdbcTemplate.update("INSERT INTO order_online (order_on_id, totality, email, date, phone_number,NEW)" +
-                        "VALUES (?, ?, ?, ?, ?)",
-                orderOnlineValue.getOrder_on_id(),
+        orderOnline.forEach(orderOnlineValue -> jdbcTemplate.update("INSERT INTO order_online (order_on_id, totality, email, date, phone_number,status)" +
+                        "VALUES (NEXTVAL('order_online_order_on_id_seq'), ?, ?, ?, ?,?)",
+//                orderOnlineValue.getOrder_on_id(),
                 orderOnlineValue.getTotality(),
                 orderOnlineValue.getEmail(),
                 orderOnlineValue.getDate(),
-                orderOnlineValue.getPhone_number()));
+                orderOnlineValue.getPhone_number(),
+                orderOnlineValue.getStatus()));
 
     }
 

@@ -6,24 +6,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.Assert;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Tag("Selenium")
 public class SeleniumTest {
-    public static ChromeOptions chromeOptions;
+    public static EdgeOptions edgeOptions;
     public static WebDriver webDriver;
 
     @BeforeAll
-    public static void setUp(){
-        chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--remote-allow-origins=*");
+    public static void setUp() {
+        edgeOptions = new EdgeOptions();
+        edgeOptions.addArguments("--remote-allow-origins=*");
 
         System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/test/resources/chromedriver.exe");
 
-        webDriver = new ChromeDriver(chromeOptions);
-        webDriver.get("http://localhost:3000/seller/");
-//        webDriver.get("http://localhost:8080/underweary");
+        webDriver = new EdgeDriver(edgeOptions);
+        webDriver.get("http://localhost:4000/seller/");
     }
 
     @Test
@@ -57,7 +58,7 @@ public class SeleniumTest {
         WebElement productID = webDriver.findElement(By.xpath("//*[@id=\"underwearResultsContainer\"]/table/tbody/tr[3]/td[1]"));
 
         String actualID = productID.getText();
-        String expectedID = "99";
+        String expectedID = "2";
 
         Assert.assertEquals(expectedID, actualID);
 
